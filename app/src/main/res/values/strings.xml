@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">pics-trainning</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="welcome">Welcome to</string>
+    <string name="textual">Already Have An Account?</string>
+    <string name="register">New user? Register now!</string>
+    <string name="email">E-mail</string>
+    <string name="home">Do you already have an account?</string>
+</resources>
