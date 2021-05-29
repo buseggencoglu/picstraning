@@ -60,35 +60,32 @@ public class GameDatabase {
         return database.query("user", null, "username='" + username + "' and passw='" + md5(passw) + "'", null, null, null, null);
     }
 
-    public void addGame(int score, int correct_answer, int false_answer, int user){
-        ContentValues newGame = new ContentValues();
-        newGame.put("score", score);
-        newGame.put("correct_answer", correct_answer);
-        newGame.put("false_answer", false_answer);
-        newGame.put("user",user);
+    public Cursor getUserById(int id){
+        return database.query("user", null, "_id=" + id, null, null, null, null);
+    }
+
+    public void updateUser(int id, int goal){
+        ContentValues userUpdate = new ContentValues();
+        userUpdate.put("goal", goal);
         open();
-        database.insert("game", null, newGame);
+        database.update("user", userUpdate, "_id=" + id, null);
         close();
     }
 
-    public Cursor getGame(long id){
-        return database.query("game",null, "_id="+id, null, null, null, null);
-    }
-
-    public void addQuestion(byte[] picture, String names, int game){
+    public void addQuestion(int userId, byte[] picture, String names){
         ContentValues newQuestion = new ContentValues();
+        newQuestion.put("userId", userId);
         newQuestion.put("picture", picture);
         newQuestion.put("names", names);
-        newQuestion.put("game",game);
         open();
         database.insert("game", null, newQuestion);
         close();
     }
 
-    public Cursor getQuestion(long id){
-        return database.query("question",null, "_id="+id, null, null, null, null);
+    public Cursor getQuestionsByUser(int id){
+        return database.query("question",null, "user="+id,
+                null, null, null, null);
     }
-
 
     private class DatabaseOpenHelper extends SQLiteOpenHelper {
 
@@ -101,13 +98,9 @@ public class GameDatabase {
                     "(_id integer primary key autoincrement," +
                     "username TEXT, email TEXT, passw TEXT, high_score integer DEFAULT 0, goal integer DEFAULT 0)";
             db.execSQL(sqlUser);
-            String sqlGame = "CREATE TABLE game" +
-                    "(_id integer primary key autoincrement, user integer," +
-                    "score integer, correct_answer integer, false_answer integer, foreign key(user) references user(_id));";
-            db.execSQL(sqlGame);
             String sqlQuestion = "CREATE TABLE question" +
                     "(_id integer primary key autoincrement, game integer," +
-                    "picture blob, names TEXT, foreign key(game) references game(_id));";
+                    "picture blob, names TEXT, foreign key(user) references user(_id));";
             db.execSQL(sqlQuestion);
         }
 
