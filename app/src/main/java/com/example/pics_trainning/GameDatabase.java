@@ -74,17 +74,21 @@ public class GameDatabase {
 
     public void addQuestion(int userId, byte[] picture, String names){
         ContentValues newQuestion = new ContentValues();
-        newQuestion.put("userId", userId);
+        newQuestion.put("user", userId);
         newQuestion.put("picture", picture);
         newQuestion.put("names", names);
         open();
-        database.insert("game", null, newQuestion);
+        database.insert("question", null, newQuestion);
         close();
     }
 
     public Cursor getQuestionsByUser(int id){
         return database.query("question",null, "user="+id,
                 null, null, null, null);
+    }
+
+    public void deleteQuestionByName(String name){
+        database.delete("question", "names='" + name + "'", null);
     }
 
     private class DatabaseOpenHelper extends SQLiteOpenHelper {
@@ -99,7 +103,7 @@ public class GameDatabase {
                     "username TEXT, email TEXT, passw TEXT, high_score integer DEFAULT 0, goal integer DEFAULT 0)";
             db.execSQL(sqlUser);
             String sqlQuestion = "CREATE TABLE question" +
-                    "(_id integer primary key autoincrement, game integer," +
+                    "(_id integer primary key autoincrement, user integer," +
                     "picture blob, names TEXT, foreign key(user) references user(_id));";
             db.execSQL(sqlQuestion);
         }

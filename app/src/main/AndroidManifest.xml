@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Picstrainning">
-        <activity android:name=".AddQuestion"></activity>
+        <activity android:name=".GameReportActivity"></activity>
+        <activity android:name=".WrongAnswer" />
+        <activity android:name=".correct_activity" />
+        <activity android:name=".GameActivity" />
+        <activity android:name=".AddQuestion" />
         <activity
             android:name=".NewGame"
             android:label="@string/title_activity_new_game"
