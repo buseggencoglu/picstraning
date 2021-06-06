@@ -72,6 +72,14 @@ public class GameDatabase {
         close();
     }
 
+    public void updateUserScore(int id, int score){
+        ContentValues userUpdate = new ContentValues();
+        userUpdate.put("high_score", score);
+        open();
+        database.update("user", userUpdate, "_id=" + id, null);
+        close();
+    }
+
     public void addQuestion(int userId, byte[] picture, String names){
         ContentValues newQuestion = new ContentValues();
         newQuestion.put("user", userId);

@@ -36,6 +36,8 @@ public class GameActivity extends AppCompatActivity {
     TextView timerText;
 
     private int score = 0;
+    private int correctAnswerNumber = 0;
+    private int incorrectAnswerNumber = 0;
     private int currentTimer = 90;
     TimerTask task;
 
@@ -60,30 +62,30 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void timeout() {
+        incorrectAnswerNumber++;
         setNextPhoto();
         startTimer();
     }
 
     private void startTimer() {
         currentTimer = 90;
-        if (task != null) {
-            task.cancel();
-        }
-        Handler mainHandler = new Handler();
-        task = new TimerTask(){
-            public void run() {
-                currentTimer--;
-                if (currentTimer <= 0) {
-                    timeout();
-                } else {
-                    timerText.setText(String.valueOf(currentTimer));
+        System.out.println(task);
+        if (task == null) {
+            Handler mainHandler = new Handler();
+            task = new TimerTask(){
+                public void run() {
+                    currentTimer--;
+                    if (currentTimer <= 0) {
+                        timeout();
+                    } else {
+                        timerText.setText(String.valueOf(currentTimer));
+                    }
+                    long delay = 1000L;
+                    mainHandler.postDelayed(task, delay);
                 }
-                long delay = 1000L;
-                mainHandler.postDelayed(task, delay);
-            }
-        };
-
-        mainHandler.post(task);
+            };
+            mainHandler.post(task);
+        }
     }
 
     private void setQuestions(Cursor result) {
@@ -105,22 +107,20 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void gotAnswer(View v){
-        setNextPhoto();
-        startTimer();
-
-        System.out.println(v.getId());
-        System.out.println(currentQuestion);
-
         if (v.getId() == currentQuestion.getId()) {
             Button selectedButton = findViewById(v.getId());
             ((ViewGroup)selectedButton.getParent()).removeView(selectedButton);
             score +=10;
+            correctAnswerNumber++;
             Intent intent = new Intent(this, correct_activity.class);
             startActivity(intent);
         } else {
+            incorrectAnswerNumber++;
             Intent intent = new Intent(this, WrongAnswer.class);
             startActivity(intent);
         }
+        setNextPhoto();
+        startTimer();
     }
 
     public View.OnClickListener finishGame = new View.OnClickListener() {
@@ -140,19 +140,22 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GameReportActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("score", score);
+        intent.putExtra("correct", correctAnswerNumber);
+        intent.putExtra("incorrect", incorrectAnswerNumber);
         startActivity(intent);
     }
 
     private void setNextPhoto() {
-        currentIndex++;
-        if (currentIndex >= questions.size()) {
+        if (currentIndex == questions.size()) {
             redirectToGameReport();
+            return;
         }
         this.currentQuestion = questions.get(currentIndex);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inMutable = true;
         Bitmap bmp = BitmapFactory.decodeByteArray(this.currentQuestion.getPicture(), 0, this.currentQuestion.getPicture().length, options);
         this.currentImage.setImageBitmap(bmp);
+        currentIndex++;
     }
 
     private class QuestionTask extends AsyncTask<Object, Object, Cursor> {

@@ -19,9 +19,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/imageView4"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            tools:srcCompat="@mipmap/wronganswer_foreground" />
+            app:srcCompat="@mipmap/wronganswer_foreground" />
 
         <TextView
             android:id="@+id/textView3"

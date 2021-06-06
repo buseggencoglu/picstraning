@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             this.mail.setText(result.getString(result.getColumnIndexOrThrow("email")));
             this.highScore.setText(result.getString(result.getColumnIndexOrThrow("high_score")));
             this.goal.setText(result.getString(result.getColumnIndexOrThrow("goal")));
-        }
+         }
     }
 
     public void redirectNewGame() {
