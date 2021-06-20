@@ -38,7 +38,7 @@ public class GameActivity extends AppCompatActivity {
     private int score = 0;
     private int correctAnswerNumber = 0;
     private int incorrectAnswerNumber = 0;
-    private int currentTimer = 90;
+    private int currentTimer = 53;
     TimerTask task;
 
     @Override
@@ -68,7 +68,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        currentTimer = 90;
+        currentTimer = 53;
         System.out.println(task);
         if (task == null) {
             Handler mainHandler = new Handler();
@@ -97,7 +97,7 @@ public class GameActivity extends AppCompatActivity {
                     result.getBlob(result.getColumnIndexOrThrow("picture"))));
             Button button = new Button(this.context);
             button.setOnClickListener(selectName);
-            button.setText(name + id);
+            button.setText(name);
             button.setId(id);
             this.choicesContainer.addView(button);
         }

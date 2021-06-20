@@ -17,15 +17,15 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="214dp"
-            android:layout_height="152dp"
-            android:layout_marginBottom="36dp"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
+            android:layout_height="200dp"
+            android:layout_marginBottom="6dp"
+            app:srcCompat="@mipmap/mainlogo_foreground" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="25dp"
+            android:layout_marginHorizontal="15dp"
             android:background="@drawable/rounded_background"
             >
             <ImageView
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="36dp"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                app:srcCompat="@mipmap/usericon_foreground" />
 
             <TableLayout
                 android:layout_width="wrap_content"
