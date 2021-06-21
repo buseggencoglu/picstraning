@@ -34,6 +34,7 @@ public class GameActivity extends AppCompatActivity {
     int currentIndex = 0;
     Question currentQuestion;
     TextView timerText;
+    Handler mainHandler;
 
     private int score = 0;
     private int correctAnswerNumber = 0;
@@ -69,9 +70,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void startTimer() {
         currentTimer = 53;
-        System.out.println(task);
         if (task == null) {
-            Handler mainHandler = new Handler();
+            mainHandler = new Handler();
             task = new TimerTask(){
                 public void run() {
                     currentTimer--;
@@ -142,6 +142,7 @@ public class GameActivity extends AppCompatActivity {
         intent.putExtra("score", score);
         intent.putExtra("correct", correctAnswerNumber);
         intent.putExtra("incorrect", incorrectAnswerNumber);
+        mainHandler.removeCallbacksAndMessages(null);
         startActivity(intent);
     }
 

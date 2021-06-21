@@ -48,6 +48,7 @@ public class GameReportActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
+        finish();
     }
 
     public View.OnClickListener returnToMain = new View.OnClickListener() {

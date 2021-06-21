@@ -52,9 +52,6 @@ public class QuestionsAdaptor extends RecyclerView.Adapter<QuestionsAdaptor.View
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-
-            System.out.println(view.getParent());
-            System.out.println("removed clicked!");
         }
     }
 

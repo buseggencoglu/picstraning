@@ -43,8 +43,6 @@ public class register extends AppCompatActivity {
 
     public View.OnClickListener buttonRegister = new View.OnClickListener() {
         public void onClick(View v){
-            System.out.println(passw);
-            System.out.println(confirmPassw);
             boolean error = false;
             if (username.getText().toString().isEmpty()) {
                 error = true;
